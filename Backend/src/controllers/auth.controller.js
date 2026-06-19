@@ -51,7 +51,12 @@ async function registerUserController(req, res) {
 
     //do we need to create token during registration? Yes, we need to create a token during registration because it allows the user to be automatically logged in after they have successfully registered. By generating a JWT token and sending it back to the client, we can authenticate the user and provide them with access to protected routes without requiring them to log in again. This improves the user experience by streamlining the registration and login process.
 
-    res.cookie("token", token)//this token goes to the cookie of the user and it will be used for authentication in future requests. The token is stored in a cookie called "token" and is sent back to the client in the response. The client can then include this cookie in subsequent requests to authenticate the user and access protected routes.
+    res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 24 * 60 * 60 * 1000
+})//this token goes to the cookie of the user and it will be used for authentication in future requests. The token is stored in a cookie called "token" and is sent back to the client in the response. The client can then include this cookie in subsequent requests to authenticate the user and access protected routes.
 
 
     res.status(201).json({
@@ -99,7 +104,12 @@ async function loginUserController(req, res) {
     )//the format of sign method is jwt.sign(payload, secretOrPrivateKey, [options, callback]). The payload is the data that we want to include in the token, such as the user's id and username. The secretOrPrivateKey is a string that is used to sign the token and should be kept secret. The options parameter can include additional settings for the token, such as the expiration time. In this case, we are setting the token to expire in 1 day.
 
 
-    res.cookie("token", token)
+    res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 24 * 60 * 60 * 1000
+})
     // the cookie goes into frontend and it will be used for authentication in future requests. The token is stored in a cookie called "token" and is sent back to the client in the response. cookie is stored in the browser and it will be sent with every subsequent request to the server, allowing the server to authenticate the user and provide access to protected routes.
 
     res.status(200).json({
@@ -125,7 +135,11 @@ async function logoutUserController(req, res) {
         await tokenBlacklistModel.create({ token })
     }//needs to be blacklisted because if the user logs out and the token is not blacklisted, the user can still use the same token to access protected routes. By adding the token to a blacklist, we can ensure that it is no longer valid and cannot be used for authentication.
 
-    res.clearCookie("token")
+    res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none"
+})
 
     res.status(200).json({
         message: "User logged out successfully"
