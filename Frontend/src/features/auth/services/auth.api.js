@@ -1,10 +1,11 @@
 import axios from "axios"
+
 //axios is a popular JavaScript library used for making HTTP requests from the browser or Node.js. It provides an easy-to-use API for sending asynchronous requests to a server and handling responses. In this code, axios is imported to create an instance of the axios client that will be used to make API requests related to authentication.
 //used to connect frontend to backend and is very important.
 
 
 const api = axios.create({
-    baseURL: process.env.VITE_API_URL,
+    baseURL: import.meta.env.VITE_API_URL,
     withCredentials: true
 })
 //.create() is a method provided by the axios library that allows us to create a new instance of the axios client with custom configuration. In this case, we are creating an instance called api with a baseURL from the VITE_API_URL environment variable and the withCredentials option set to true. This means that all requests made using this api instance will be sent to the specified base URL and will include any cookies associated with the domain, allowing for authentication and session management.
