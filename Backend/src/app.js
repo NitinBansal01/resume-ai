@@ -9,7 +9,7 @@ app.use(cookieParser())//used to parse the cookies sent by the client in the req
 
 app.use(cors({
     origin:[
-        "https://resume-ai-rho-rose.vercel.app/" , 
+        "https://resume-ai-rho-rose.vercel.app" , 
         "http://localhost:5173", 
         "https://resume-ai-nitinbansal.vercel.app"
      ],
