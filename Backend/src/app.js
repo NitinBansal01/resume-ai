@@ -8,7 +8,11 @@ app.use(express.json()) // this line of code is used to parse the incoming reque
 app.use(cookieParser())//used to parse the cookies sent by the client in the request headers and make them available in the req.cookies property of the request object.
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin:[
+        "https://resume-ai-rho-rose.vercel.app/" , 
+        "http://localhost:5173", 
+        "https://resume-ai-nitinbansal.vercel.app"
+     ],
     credentials: true
 }))
 
